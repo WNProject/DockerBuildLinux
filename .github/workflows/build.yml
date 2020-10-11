@@ -1,0 +1,64 @@
+name: Build
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    name: Build (${{matrix.compiler.c}})
+    runs-on: ubuntu-latest
+    env:
+      PACKAGE: ghcr.io/${{github.repository_owner}}/build-linux
+    strategy:
+      matrix:
+        compiler: [
+          { packages: 'clang-9', c: 'clang-9', cpp: 'clang++-9' },
+          { packages: 'clang-10', c: 'clang-10', cpp: 'clang++-10' },
+          { packages: 'gcc-9 g++-9', c: 'gcc-9', cpp: 'g++-9' },
+          { packages: 'gcc-10 g++-10', c: 'gcc-10', cpp: 'g++-10' }
+        ]
+    steps:
+      - name: Gather info
+        id: info
+        run: |
+          TAG="${PACKAGE}:${{matrix.compiler.c}}"
+          echo "::set-output name=tag::${TAG,,}"
+      - name: Set up docker buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          driver-opts: image=moby/buildkit:master
+      - name: Checkout code
+        uses: actions/checkout@v2.3.3
+      - name: Build image
+        if: github.ref != 'refs/heads/main'
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{steps.buildx.outputs.name}}
+          context: .
+          tags: ${{steps.info.outputs.tag}}
+          build-args: |
+            COMPILER_PACKAGES=${{matrix.compiler.packages}}
+            C_COMPILER_NAME=${{matrix.compiler.c}}
+            CPP_COMPILER_NAME=${{matrix.compiler.cpp}}
+          push: false
+      - name: Login into registry
+        if: github.ref == 'refs/heads/main'
+        uses: docker/login-action@v1.4.1
+        with:
+          registry: ghcr.io
+          username: ${{secrets.CONTAINER_REGISTRY_USER}}
+          password: ${{secrets.CONTAINER_REGISTRY_TOKEN}}
+      - name: Build & push image
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{steps.buildx.outputs.name}}
+          context: .
+          tags: ${{steps.info.outputs.tag}}
+          build-args: |
+            COMPILER_PACKAGES=${{matrix.compiler.packages}}
+            C_COMPILER_NAME=${{matrix.compiler.c}}
+            CPP_COMPILER_NAME=${{matrix.compiler.cpp}}
+          push: true
