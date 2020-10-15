@@ -22,6 +22,8 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
       /usr/bin/cc cc /usr/bin/${C_COMPILER_NAME} 100 && \
     update-alternatives --install \
       /usr/bin/c++ c++ /usr/bin/${CPP_COMPILER_NAME} 100 && \
+    update-alternatives --install \
+      /usr/bin/python python /usr/bin/python3 100 && \
     apt-get autoremove --purge -y && \
     apt-get clean && \
     rm -rf \
