@@ -11,6 +11,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get upgrade -y && \
     apt-get install -y \
       apt-utils \
+      git \
       libx11-xcb-dev \
       libxcb-keysyms1-dev \
       python3 \
