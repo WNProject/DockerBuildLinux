@@ -1,6 +1,7 @@
 FROM ubuntu:focal-20201008
 
 # set input arguments
+ARG CMAKE_VERSION="3.16.3"
 ARG COMPILER_PACKAGES
 ARG C_COMPILER_NAME
 ARG CPP_COMPILER_NAME
@@ -15,7 +16,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
       libx11-xcb-dev \
       libxcb-keysyms1-dev \
       python3 \
-      cmake \
+      cmake=${CMAKE_VERSION}* \
       make \
       ninja-build \
       ${COMPILER_PACKAGES} && \
