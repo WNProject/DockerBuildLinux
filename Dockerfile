@@ -18,15 +18,15 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get install -y \
       apt-utils \
       git \
+      curl \
+      libssl-dev \
+      pkg-config \
       libx11-xcb-dev \
       libxcb-keysyms1-dev \
       python3 \
       cmake=${CMAKE_VERSION}* \
       make \
       ninja-build \
-      libssl-dev \
-      pkg-config \
-      curl \
       ${COMPILER_PACKAGES} && \
     update-alternatives --install \
       /usr/bin/cc cc /usr/bin/${C_COMPILER_NAME} 100 && \
@@ -34,17 +34,15 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
       /usr/bin/c++ c++ /usr/bin/${CPP_COMPILER_NAME} 100 && \
     update-alternatives --install \
       /usr/bin/python python /usr/bin/python3 100 && \
-    curl https://sh.rustup.rs -sSf > rs.sh && \
-    chmod +x rs.sh && \
-    ./rs.sh -y && \
+    curl -sSf https://sh.rustup.rs | sh -s -- -y && \
     cargo install sccache --features=gcs && \
     apt-get autoremove --purge -y && \
     apt-get clean && \
     rm -rf \
+      ${HOME}/.cargo/registry \
       /var/lib/apt/lists/* \
       /var/tmp/* \
-      /tmp/* \
-      $HOME/.cargo/registry
+      /tmp/*
 
 # default command
 CMD ["bash"]
