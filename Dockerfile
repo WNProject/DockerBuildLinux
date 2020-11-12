@@ -29,17 +29,17 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
       /usr/bin/c++ c++ /usr/bin/${CPP_COMPILER_NAME} 100 && \
     update-alternatives --install \
       /usr/bin/python python /usr/bin/python3 100 && \
-    curl https://sh.rustup.rs -sSf > rs.sh && \
-    chmod +x rs.sh && \
-    ./rs.sh -y && \
+    curl -sSf -L https://sh.rustup.rs -o /tmp/rs.sh && \
+    chmod +x /tmp/rs.sh && \
+    /tmp/rs.sh -y && \
     $HOME/.cargo/bin/cargo install sccache --features=gcs && \
     apt-get autoremove --purge -y && \
     apt-get clean && \
     rm -rf \
+      ${HOME}/.cargo/registry \
       /var/lib/apt/lists/* \
       /var/tmp/* \
-      /tmp/* \
-      $HOME/.cargo/registry
+      /tmp/*
 
 # default command
 CMD ["bash"]
