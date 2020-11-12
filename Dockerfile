@@ -6,6 +6,11 @@ ARG COMPILER_PACKAGES
 ARG C_COMPILER_NAME
 ARG CPP_COMPILER_NAME
 
+# set basic environment variables
+ENV HOME="/root" \
+    TERM="xterm"
+ENV PATH="${PATH}:${HOME}/.cargo/bin"
+
 # install packages
 RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get update && \
@@ -32,7 +37,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
     curl https://sh.rustup.rs -sSf > rs.sh && \
     chmod +x rs.sh && \
     ./rs.sh -y && \
-    $HOME/.cargo/bin/cargo install sccache --features=gcs && \
+    cargo install sccache --features=gcs && \
     apt-get autoremove --purge -y && \
     apt-get clean && \
     rm -rf \
