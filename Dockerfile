@@ -15,19 +15,20 @@ ENV PATH="${PATH}:${HOME}/.cargo/bin"
 RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y \
+    apt-get install --no-install-recommends -y \
+      ${COMPILER_PACKAGES} \
       apt-utils \
-      git \
+      ca-certificates \
+      cmake=${CMAKE_VERSION}* \
       curl \
+      git \
       libssl-dev \
-      pkg-config \
       libx11-xcb-dev \
       libxcb-keysyms1-dev \
-      python3 \
-      cmake=${CMAKE_VERSION}* \
       make \
       ninja-build \
-      ${COMPILER_PACKAGES} && \
+      pkg-config \
+      python3 && \
     update-alternatives --install \
       /usr/bin/cc cc /usr/bin/${C_COMPILER_NAME} 100 && \
     update-alternatives --install \
@@ -40,6 +41,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get clean && \
     rm -rf \
       ${HOME}/.cargo/registry \
+      ${HOME}/.cargo/git \
       /var/lib/apt/lists/* \
       /var/tmp/* \
       /tmp/*
