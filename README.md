@@ -44,7 +44,7 @@ Currently only version `9` and `10` of both **GCC** and **Clang** are supported.
 
 ```bash
 docker build . -t build-linux \
-    --build-arg COMPILER_PACKAGES='gcc-10 g++10' \
+    --build-arg COMPILER_PACKAGES='gcc-10 g++-10' \
     --build-arg C_COMPILER_NAME='gcc-10' \
     --build-arg CPP_COMPILER_NAME='g++-10'
 ```
