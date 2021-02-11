@@ -9,6 +9,7 @@ on:
     - cron: '0 0 1 1 *'
 env:
   BRANCH: auto/update-license
+  REGEX: '^(Copyright.*)[0-9]{4}(, WNProject Authors)$'
 jobs:
   update-license:
     name: Update license
@@ -22,7 +23,7 @@ jobs:
           git checkout $BRANCH || git checkout -b $BRANCH
       - name: Update license
         run: |
-          sed -i -E "s/^(Copyright.*)[0-9]{4}(.*)$/\1$(date +%Y)\2/" LICENSE
+          sed -i -E "s/$REGEX/\1$(date +%Y)\2/" LICENSE
       - name: Check for changes
         id: changes
         run: |
@@ -32,7 +33,7 @@ jobs:
         run: |
           git reset --hard origin/main
           DATE=$(date +%Y)
-          sed -i -E "s/^(Copyright.*)[0-9]{4}(.*)$/\1$DATE\2/" LICENSE
+          sed -i -E "s/$REGEX/\1$DATE\2/" LICENSE
           git config user.name $COMMIT_USERNAME
           git config user.email $COMMIT_EMAIL
           git add LICENSE
