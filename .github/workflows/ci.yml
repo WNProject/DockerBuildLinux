@@ -1,21 +1,34 @@
-name: Build
+name: CI
 on:
   pull_request:
+    branches: main
   push:
-    branches:
-      - main
+    branches: main
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: ci-${{github.ref}}
+  cancel-in-progress: ${{github.ref != 'refs/heads/main'}}
 jobs:
   build:
     name: Build (${{matrix.compiler.c}})
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        compiler: [
-          { packages: 'clang-9', c: 'clang-9', cpp: 'clang++-9' },
-          { packages: 'clang-10', c: 'clang-10', cpp: 'clang++-10' },
-          { packages: 'gcc-9 g++-9', c: 'gcc-9', cpp: 'g++-9' },
-          { packages: 'gcc-10 g++-10', c: 'gcc-10', cpp: 'g++-10' }
-        ]
+        compiler:
+          - packages: clang-9
+            c: clang-9
+            cpp: clang++-9
+          - packages: clang-10
+            c: clang-10
+            cpp: clang++-10
+          - packages: gcc-9 g++-9
+            c: gcc-9
+            cpp: g++-9
+          - packages: gcc-10 g++-10
+            c: gcc-10
+            cpp: g++-10
     steps:
       - name: Checkout
         uses: actions/checkout@v2.3.4
