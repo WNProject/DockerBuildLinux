@@ -1,7 +1,7 @@
 # Docker Build Linux
 
 [![License]](LICENSE)
-[![Build][Build Badge]][Build Workflow]
+[![CI][CI Badge]][CI Workflow]
 
 Docker container containing all needed **Linux** C/C++ build tools. Each
 container will contain only one version of either **GCC** or **Clang** but will
@@ -51,5 +51,5 @@ docker build . -t build-linux \
 
 <!-- external links -->
 [License]: https://img.shields.io/github/license/WNProject/DockerBuildLinux?label=License
-[Build Badge]: https://github.com/WNProject/DockerBuildLinux/workflows/Build/badge.svg?branch=main
-[Build Workflow]: https://github.com/WNProject/DockerBuildLinux/actions?query=workflow%3ABuild+branch%3Amain
+[CI Badge]: https://github.com/WNProject/DockerBuildLinux/actions/workflows/ci.yml/badge.svg?branch=main
+[CI Workflow]: https://github.com/WNProject/DockerBuildLinux/actions/workflows/ci.yml?query=branch%3Amain
