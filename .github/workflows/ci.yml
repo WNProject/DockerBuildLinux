@@ -47,7 +47,7 @@ jobs:
           echo "##[set-output name=cache-restore-keys;]${CACHE_BASE_KEY}"
       - name: Set up docker buildx
         id: buildx
-        uses: docker/setup-buildx-action@v1.6.0
+        uses: docker/setup-buildx-action@v1.5.1
         with:
           version: latest
       - name: Set up cache
