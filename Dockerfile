@@ -53,6 +53,6 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
 CMD ["bash"]
 
 # labels
-LABEL maintainer WNProject
-LABEL org.opencontainers.image.source \
-      https://github.com/WNProject/DockerBuildLinux
+LABEL maintainer WNProject \
+      org.opencontainers.image.source \
+        https://github.com/WNProject/DockerBuildLinux
