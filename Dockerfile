@@ -18,7 +18,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get install --no-install-recommends --no-install-suggests -y \
       apt-utils \
       software-properties-common && \
-    add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
     apt-get install --no-install-recommends --no-install-suggests -y \
       ${COMPILER_PACKAGES} \
       ca-certificates \
