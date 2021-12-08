@@ -28,7 +28,8 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
       make \
       ninja-build \
       pkg-config \
-      python3 && \
+      python3 \
+      software-properties-common && \
     update-alternatives --install \
       /usr/bin/cc cc /usr/bin/${C_COMPILER_NAME} 100 && \
     update-alternatives --install \
