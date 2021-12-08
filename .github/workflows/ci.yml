@@ -17,6 +17,12 @@ jobs:
     strategy:
       matrix:
         compiler:
+          - packages: clang-9
+            c: clang-9
+            cpp: clang++-9
+          - packages: clang-10
+            c: clang-10
+            cpp: clang++-10        
           - packages: clang-11
             c: clang-11
             cpp: clang++-11
