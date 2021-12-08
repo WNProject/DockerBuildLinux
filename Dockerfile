@@ -15,9 +15,12 @@ ENV PATH="${PATH}:${HOME}/.cargo/bin"
 RUN export DEBIAN_FRONTEND='noninteractive' && \
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get install --no-install-recommends -y \
-      ${COMPILER_PACKAGES} \
+    apt-get install --no-install-recommends --no-install-suggests -y \
       apt-utils \
+      software-properties-common && \
+    add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    apt-get install --no-install-recommends --no-install-suggests -y \
+      ${COMPILER_PACKAGES} \
       ca-certificates \
       cmake=${CMAKE_VERSION}* \
       curl \
@@ -28,8 +31,7 @@ RUN export DEBIAN_FRONTEND='noninteractive' && \
       make \
       ninja-build \
       pkg-config \
-      python3 \
-      software-properties-common && \
+      python3 && \
     update-alternatives --install \
       /usr/bin/cc cc /usr/bin/${C_COMPILER_NAME} 100 && \
     update-alternatives --install \
