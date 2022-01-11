@@ -1,4 +1,4 @@
-FROM ubuntu:focal-20211006
+FROM ubuntu:focal-20220105
 
 # set input arguments
 ARG CMAKE_VERSION="3.16.3"
