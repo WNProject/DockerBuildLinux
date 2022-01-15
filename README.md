@@ -38,7 +38,8 @@ docker build . -t build-linux \
     --build-arg CPP_COMPILER_NAME='[clang++*|g++*]'
 ```
 
-Currently only version `9` and `10` of both **GCC** and **Clang** are supported.
+Currently only version `9`, `10` and `11` of **GCC** and `9`, `10`, `11` and
+`12` of **Clang** are supported.
 
 ### Example
 
